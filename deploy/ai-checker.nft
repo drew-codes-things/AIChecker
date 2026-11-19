@@ -1,0 +1,8 @@
+table inet ai_checker {
+	chain input {
+		type filter hook input priority -10; policy accept;
+		iifname "lo" accept
+		ip saddr __APP_HOST__ tcp dport __WORKER_PORT__ accept
+		tcp dport __WORKER_PORT__ drop
+	}
+}

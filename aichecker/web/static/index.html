@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#19191c">
+<title>AI Checker</title>
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/app.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="AI Checker home">
+    <img src="/static/icon.svg" alt="" width="28" height="28">
+    <span class="brand-name">AI <span class="brand-accent">Checker</span></span>
+  </a>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-check" data-panel="check" aria-selected="true" aria-controls="panel-check">Check</button>
+    <button class="tab" role="tab" id="tab-humanise" data-panel="humanise" aria-selected="false" aria-controls="panel-humanise">Humaniser</button>
+    <button class="tab" role="tab" id="tab-voice" data-panel="voice" aria-selected="false" aria-controls="panel-voice">Your voice</button>
+    <button class="tab" role="tab" id="tab-accuracy" data-panel="accuracy" aria-selected="false" aria-controls="panel-accuracy">How accurate this is</button>
+  </nav>
+  <span class="status" id="worker-status"><span class="dot" id="worker-dot"></span><span id="worker-text">Checking</span></span>
+  <a class="signout" id="signout" href="/signout" hidden>Sign out</a>
+</header>
+
+<main class="page">
+  <section role="tabpanel" id="panel-check" aria-labelledby="tab-check">
+    <div class="card">
+      <h1>Does this read like AI wrote it?</h1>
+      <p class="intro">Paste text or open a file. You get a likelihood with the reasons behind it and the sentences that look most machine-like. It is a reading, never a verdict. Everything runs on your own server and nothing is kept.</p>
+      <div class="editor">
+        <label class="visually-hidden" for="check-text">Text to check</label>
+        <textarea class="input" id="check-text" placeholder="Paste the text here" spellcheck="false"></textarea>
+        <div class="row">
+          <label class="btn ghost" for="check-file">Open a file</label>
+          <input id="check-file" type="file" accept=".docx,.pdf,.txt,.md,.markdown,.odt" hidden>
+          <span class="faint" id="check-count">0 characters</span>
+          <span class="spacer"></span>
+          <button class="btn ghost" type="button" id="check-clear">Clear</button>
+          <button class="btn send" type="button" id="check-run">Check</button>
+        </div>
+      </div>
+      <div id="check-message" hidden></div>
+    </div>
+    <div id="check-result" hidden></div>
+  </section>
+
+  <section role="tabpanel" id="panel-humanise" aria-labelledby="tab-humanise" hidden>
+    <div class="card">
+      <h1>Humaniser</h1>
+      <p class="intro">Rewrites stiff or machine-sounding text so it reads naturally in your own voice, keeping the meaning. It learns your voice only from the writing you add on the Your voice tab. It does not try to beat anyone else's AI detector, and the scores here are only this checker's own reading.</p>
+      <div id="humanise-voice" class="message"></div>
+      <div class="editor">
+        <label class="visually-hidden" for="humanise-text">Text to rewrite</label>
+        <textarea class="input" id="humanise-text" placeholder="Paste the text to rewrite (up to about 2,000 words)" spellcheck="false"></textarea>
+        <div class="row">
+          <label class="btn ghost" for="humanise-file">Open a file</label>
+          <input id="humanise-file" type="file" accept=".docx,.pdf,.txt,.md,.markdown,.odt" hidden>
+          <span class="faint" id="humanise-count">0 characters</span>
+          <span class="spacer"></span>
+          <button class="btn send" type="button" id="humanise-run">Rewrite in my voice</button>
+        </div>
+      </div>
+      <div id="humanise-progress" hidden>
+        <div class="progress"><div id="humanise-bar"></div></div>
+        <div class="row"><span class="muted" id="humanise-step"></span><span class="spacer"></span><button class="btn ghost small" type="button" id="humanise-stop">Stop</button></div>
+      </div>
+      <div id="humanise-message" hidden></div>
+    </div>
+    <div id="humanise-result" hidden></div>
+  </section>
+
+  <section role="tabpanel" id="panel-voice" aria-labelledby="tab-voice" hidden>
+    <div class="card">
+      <h1>Your voice</h1>
+      <p class="intro">The Humaniser copies the style of writing you add here and nothing else. Nothing on your computer is read unless you upload it below or choose a folder in the server settings. Files are split into short passages, and the passages and their numeric fingerprints stay on this server.</p>
+      <div id="voice-summary" class="message"></div>
+      <div class="row">
+        <label class="btn send" for="voice-files">Add files</label>
+        <input id="voice-files" type="file" multiple accept=".docx,.pdf,.txt,.md,.markdown,.odt" hidden>
+        <button class="btn ghost" type="button" id="voice-rescan" hidden>Rescan the voice folder</button>
+        <span class="faint" id="voice-busy"></span>
+      </div>
+      <div id="voice-message" hidden></div>
+      <ul class="files" id="voice-list"></ul>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="panel-accuracy" aria-labelledby="tab-accuracy" hidden>
+    <div class="card" id="accuracy-body"><h1>How accurate this is</h1><p class="muted">Loading</p></div>
+  </section>
+</main>
+</body>
+</html>

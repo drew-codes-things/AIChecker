@@ -1,0 +1,13 @@
+[Unit]
+Description=AI Checker worker port: only the app container may connect
+Before=ai-checker-worker.service
+After=network-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/sbin/nft -f /etc/ai-checker/firewall.nft
+ExecStop=/usr/sbin/nft delete table inet ai_checker
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+AI Checker and Humaniser builds on the following work.
+
+Binoculars (Hans et al., 2024), score definition and reference implementation:
+BSD 3-Clause, licenses/Binoculars-BSD-3-Clause.txt.
+
+Fast-DetectGPT (Bao et al., 2024), analytic sampling discrepancy:
+MIT, licenses/Fast-DetectGPT-MIT.txt.
+
+GLTR (Gehrmann, Strobelt and Rush, 2019), rank-bucket idea:
+Apache 2.0, licenses/GLTR-Apache-2.0.txt.
+
+Qwen2.5-1.5B and Qwen2.5-1.5B-Instruct (Alibaba Cloud): Apache 2.0.
+The model weights are not part of this repository.
+
+RAID (Dugan et al., 2024), the benchmark used for calibration and held-out
+measurement: MIT. The data is not part of this repository.
+
+IBM Plex fonts: SIL Open Font Licence 1.1, copied with their licence file into
+aichecker/web/static/fonts (LICENSE-ibm-plex.txt).

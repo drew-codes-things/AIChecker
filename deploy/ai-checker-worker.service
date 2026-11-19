@@ -1,0 +1,27 @@
+[Unit]
+Description=AI Checker scoring worker (Qwen pair on the GPU)
+After=network-online.target ai-checker-firewall.service
+Wants=ai-checker-firewall.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ai-checker
+EnvironmentFile=/etc/ai-checker/worker.env
+ExecStart=__WORKER_DATA_ROOT__/venv/bin/python -m aichecker.worker
+Restart=on-failure
+RestartSec=5
+UMask=0077
+MemoryMax=4G
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+PrivateTmp=true
+CapabilityBoundingSet=
+ReadWritePaths=/root __WORKER_DATA_ROOT__
+
+[Install]
+WantedBy=multi-user.target

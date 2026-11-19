@@ -1,0 +1,30 @@
+[Unit]
+Description=AI Checker web app (behind a sign-in proxy)
+After=network.target
+
+[Service]
+Type=simple
+User=ai-checker
+Group=ai-checker
+WorkingDirectory=/opt/ai-checker
+EnvironmentFile=/etc/ai-checker/app.env
+ExecStart=/opt/ai-checker/.venv/bin/python -m aichecker.web
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryMax=512M
+CapabilityBoundingSet=
+ReadWritePaths=/var/lib/ai-checker
+
+[Install]
+WantedBy=multi-user.target
